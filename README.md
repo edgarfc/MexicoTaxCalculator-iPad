@@ -2,7 +2,27 @@
 
 An iOS application for calculating Mexican taxes (ISR and IMSS) based on official 2026 tax tables and rates.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/iphone-screenshot.png" alt="iPhone Layout" width="300"/>
+      <br />
+      <em>iPhone - Single Column Layout</em>
+    </td>
+    <td align="center">
+      <img src="screenshots/ipad-screenshot.png" alt="iPad Layout" width="600"/>
+      <br />
+      <em>iPad - Optimized Two-Column Layout</em>
+    </td>
+  </tr>
+</table>
+
 ## Features
+
+- **iPad Optimized Layout**: Beautiful two-column design that takes full advantage of iPad's larger screen
+- **Responsive Design**: Automatically adapts between iPad's side-by-side layout and iPhone's vertical layout
 
 - **ISR Calculation**: Accurate Income Tax (Impuesto Sobre la Renta) calculation using official 2026 tax brackets from SAT
 - **IMSS Calculation**: Social Security (Instituto Mexicano del Seguro Social) employee contributions
