@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Bundle Identifier**: Updated to production-ready format for App Store
+  - Changed from `test.MexicoTaxCalculatorAppiPad` to `com.edgarflores.MexicoTaxCalculator`
+  - Follows Apple's reverse-domain naming convention
+  - Removed "test" prefix (not suitable for production)
+  - Shorter, cleaner name: `MexicoTaxCalculator` instead of `MexicoTaxCalculatorAppiPad`
+  - Updated for all targets: main app, tests, and UI tests
+  - File modified: `MexicoTaxCalculatorAppiPad.xcodeproj/project.pbxproj`
+  - Build verified successful
+  - Ready for App Store Connect registration
+  - Impact: This is the permanent, unique identifier for the app in the App Store
+
 - **Salary Input Field**: Improved user experience for salary input
   - Input field now starts blank instead of pre-filled with "10000"
   - Users must enter their own salary amount
