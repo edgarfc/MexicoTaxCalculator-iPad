@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **App Display Name**: Changed to "ISR Calc MX"
+  - Previous: Used target name "MexicoTaxCalculatorAppiPad"
+  - New: "ISR Calc MX" (short, clear, fits well on home screen)
+  - Updated INFOPLIST_KEY_CFBundleDisplayName in project settings
+  - Applied to both Debug and Release configurations
+  - Build verified successful
+  - Name will appear on iOS home screen and App Store
+  - Impact: More professional, concise name that's easy to remember
+
 - **Bundle Identifier**: Updated to production-ready format for App Store
   - Changed from `test.MexicoTaxCalculatorAppiPad` to `com.edgarflores.MexicoTaxCalculator`
   - Follows Apple's reverse-domain naming convention
