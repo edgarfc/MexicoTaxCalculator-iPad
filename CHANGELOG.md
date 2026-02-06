@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Contributing Guidelines**: Created comprehensive documentation for contributors
+  - `.github/CONTRIBUTING.md`: Complete workflow guide for making changes
+  - Includes changelog update requirements and checklist
+  - Testing guidelines for iPhone and iPad
+  - Code style recommendations following Swift best practices
+  - Version release process documentation
+  - Ensures all future changes will be properly documented
+
+- **Changelog Template**: Added template for consistent changelog entries
+  - `.github/CHANGELOG_TEMPLATE.md`: Template and examples for future updates
+  - Explains each changelog category (Added, Changed, Fixed, etc.)
+  - Provides examples of well-written changelog entries
+  - Guidelines for when to create new versions
+  - Helps maintain high-quality documentation standards
+
 ## [1.0.1] - 2026-02-06
 
 ### Fixed
