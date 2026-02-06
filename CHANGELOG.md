@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Xcode Git Integration Guide**: Complete guide for using git directly from Xcode
+  - `.github/XCODE_GIT_GUIDE.md`: Step-by-step instructions for Xcode source control
+  - Covers all common git operations (commit, push, pull, branching)
+  - Keyboard shortcuts reference table
+  - Recommended workflow for making changes
+  - Troubleshooting section for common issues
+  - Checklist to ensure CHANGELOG updates with every commit
+  - Makes it easy to use git without leaving Xcode IDE
+
 - **Contributing Guidelines**: Created comprehensive documentation for contributors
   - `.github/CONTRIBUTING.md`: Complete workflow guide for making changes
   - Includes changelog update requirements and checklist
