@@ -17,6 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Impact: Users see empty field on app launch, encouraging them to enter their actual salary
 
 ### Added
+- **App Store Submission Checklist**: Comprehensive guide for preparing app for App Store
+  - `.github/APP_STORE_CHECKLIST.md`: Complete checklist with all requirements
+  - Critical requirements (app icon, bundle ID, developer account, screenshots)
+  - Privacy policy template
+  - App Store Connect setup steps
+  - Testing checklist
+  - Metadata guidelines
+  - Timeline estimates
+  - Quick start and professional submission paths
+  - Helps identify what's ready and what needs work before submission
+
 - **Xcode Git Integration Guide**: Complete guide for using git directly from Xcode
   - `.github/XCODE_GIT_GUIDE.md`: Step-by-step instructions for Xcode source control
   - Covers all common git operations (commit, push, pull, branching)
