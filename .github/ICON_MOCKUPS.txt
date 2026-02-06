@@ -1,0 +1,215 @@
+APP ICON DESIGN MOCKUPS - Mexico Tax Calculator
+
+These are ASCII representations of the recommended icon designs.
+Use these as reference when creating your actual 1024x1024 PNG icon.
+
+================================================================================
+CONCEPT 1: CALCULATOR WITH MEXICAN ACCENT (RECOMMENDED)
+================================================================================
+
+┌──────────────────────────────────────┐
+│                                      │
+│     ╔═══════════════════════╗       │
+│     ║ GRADIENT BACKGROUND   ║       │
+│     ║ Top: #0EA5E9 (Blue)   ║       │
+│     ║ Bottom: #0891B2 (Teal)║       │
+│     ║                       ║       │
+│     ║      ┌───────────┐    ║       │
+│     ║      │   ╔═══╗   │    ║       │
+│     ║      │   ║ 7 8 9 │    ║       │
+│     ║      │   ║ 4 5 6 │    ║  WHITE CALCULATOR
+│     ║      │   ║ 1 2 3 │    ║  ICON (60% size)
+│     ║      │   ║ 0 . % │    ║       │
+│     ║      │   ╚═══╝   │    ║       │
+│     ║      └───────────┘    ║       │
+│     ║                       ║       │
+│     ║  ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬   ║  Mexican flag
+│     ║  Green White Red      ║  stripes (subtle)
+│     ╚═══════════════════════╝       │
+│                                      │
+└──────────────────────────────────────┘
+
+Colors:
+- Background gradient: #0EA5E9 → #0891B2
+- Calculator icon: #FFFFFF (white)
+- Flag stripes: #006847 (green), #FFFFFF (white), #CE1126 (red) at 20% opacity
+
+
+================================================================================
+CONCEPT 2: PERCENTAGE SYMBOL (MINIMAL)
+================================================================================
+
+┌──────────────────────────────────────┐
+│                                      │
+│     ╔═══════════════════════╗       │
+│     ║ SOLID TEAL            ║       │
+│     ║ Color: #0891B2        ║       │
+│     ║                       ║       │
+│     ║     $                 ║  Small dollar sign
+│     ║                       ║       │
+│     ║        ●              ║       │
+│     ║                       ║       │
+│     ║          %            ║  LARGE white %
+│     ║                       ║  (main element)
+│     ║              ●        ║       │
+│     ║                       ║       │
+│     ║                       ║       │
+│     ╚═══════════════════════╝       │
+│                                      │
+└──────────────────────────────────────┘
+
+Colors:
+- Background: #0891B2 (solid teal)
+- "%" symbol: #FFFFFF (white, bold, large)
+- "$" symbol: #FFFFFF (white, small, top-left)
+
+
+================================================================================
+CONCEPT 3: MEXICAN FLAG GRADIENT
+================================================================================
+
+┌──────────────────────────────────────┐
+│                                      │
+│     ╔═══════════════════════╗       │
+│     ║ GREEN                 ║  Top third
+│     ║ #006847               ║       │
+│     ║                       ║       │
+│     ║═══════════════════════║       │
+│     ║ WHITE                 ║  Middle third
+│     ║ #FFFFFF               ║       │
+│     ║    ┌─────────┐        ║       │
+│     ║    │   %     │        ║  Calculator/% icon
+│     ║    │  $  ÷   │        ║  in dark color
+│     ║    └─────────┘        ║       │
+│     ║═══════════════════════║       │
+│     ║ RED                   ║  Bottom third
+│     ║ #CE1126               ║       │
+│     ╚═══════════════════════╝       │
+│                                      │
+└──────────────────────────────────────┘
+
+Colors:
+- Top: #006847 (Mexican flag green)
+- Middle: #FFFFFF (white)
+- Bottom: #CE1126 (Mexican flag red)
+- Icon: #1F2937 (dark gray) OR #FFFFFF (white with shadow)
+
+
+================================================================================
+SIZE COMPARISON TEST
+================================================================================
+
+How your icon looks at different sizes:
+
+1024x1024 (Original)          180x180 (App Store)        60x60 (Home Screen)
+┌─────────────────┐           ┌────────────┐             ┌──────┐
+│                 │           │            │             │      │
+│   Calculator    │           │  Calc      │             │ %/$  │
+│   or %          │           │  or %      │             │      │
+│                 │           │            │             │      │
+└─────────────────┘           └────────────┘             └──────┘
+
+IMPORTANT: Your design must be recognizable even at 60x60 pixels!
+Test by scaling down - if you can't tell what it is, simplify the design.
+
+
+================================================================================
+COLOR PALETTE REFERENCE
+================================================================================
+
+MEXICAN FLAG COLORS:
+┌────────┐ ┌────────┐ ┌────────┐
+│ GREEN  │ │ WHITE  │ │  RED   │
+│#006847 │ │#FFFFFF │ │#CE1126 │
+└────────┘ └────────┘ └────────┘
+
+MODERN TECH COLORS (Recommended):
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│  BLUE  │ │ TEAL   │ │ GREEN  │ │ GOLD   │
+│#0EA5E9 │ │#0891B2 │ │#10B981 │ │#FBBF24 │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+PROFESSIONAL DARK:
+┌────────┐ ┌────────┐ ┌────────┐
+│  NAVY  │ │ WHITE  │ │ MINT   │
+│#1E3A8A │ │#FFFFFF │ │#34D399 │
+└────────┘ └────────┘ └────────┘
+
+
+================================================================================
+QUICK DECISION GUIDE
+================================================================================
+
+Choose based on your preference:
+
+CONCEPT 1 (Calculator + Mexican Accent)
+  ✓ Modern and professional
+  ✓ Clear purpose (calculator)
+  ✓ Subtle Mexican identity
+  ✓ Works well at small sizes
+  → RECOMMENDED for broad appeal
+
+CONCEPT 2 (Percentage Symbol)
+  ✓ Extremely simple and bold
+  ✓ Very recognizable
+  ✓ Minimal design
+  ✓ Modern aesthetic
+  → Good for minimalists
+
+CONCEPT 3 (Mexican Flag Gradient)
+  ✓ Strong Mexican identity
+  ✓ Patriotic appeal
+  ✓ Unique color scheme
+  ✗ Might be too colorful for some
+  → Good if targeting Mexican pride
+
+
+================================================================================
+CANVA QUICK STEPS
+================================================================================
+
+1. Go to canva.com → Create design → 1024 x 1024
+
+2. Background:
+   - Elements → Gradients → Blue gradient
+   - Or Elements → Shapes → Square → Color #0891B2
+
+3. Main Icon:
+   - Elements → Search "calculator icon white" or "percentage icon"
+   - Make it large (600-700px)
+   - Center it
+   - Color: White
+
+4. Accents (optional):
+   - Elements → Lines → Draw 3 thin horizontal lines at bottom
+   - Colors: green, white, red
+   - Reduce opacity to 20%
+
+5. Download:
+   - Share → Download → PNG → High quality
+
+6. Verify: Should be exactly 1024x1024 pixels
+
+
+================================================================================
+FINAL CHECKLIST
+================================================================================
+
+Before adding to Xcode:
+□ File is exactly 1024 x 1024 pixels
+□ File format is PNG
+□ No transparency (solid background)
+□ No rounded corners
+□ Icon is recognizable at 60x60 size
+□ Looks good on both light and dark backgrounds
+□ Represents calculator/tax/finance theme
+□ Professional appearance
+□ Unique (not generic)
+
+Ready? Add to Xcode:
+1. Open Xcode project
+2. Go to Assets.xcassets → AppIcon
+3. Drag your PNG into the 1024x1024 slot
+4. Done! Xcode generates all sizes automatically
+
+================================================================================

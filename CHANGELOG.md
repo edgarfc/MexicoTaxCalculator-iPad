@@ -17,6 +17,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Impact: Users see empty field on app launch, encouraging them to enter their actual salary
 
 ### Added
+- **App Icon Design Guide**: Complete guide for creating app icon
+  - `.github/APP_ICON_DESIGN.md`: Comprehensive design brief with 3 concepts
+  - Technical specifications (1024x1024 PNG, no transparency)
+  - Three design concepts with detailed color palettes
+  - Step-by-step creation guide for Canva (free tool)
+  - AI prompt for automated generation
+  - Designer hiring guide with budget estimates
+  - Tools comparison (Canva, Figma, GIMP, Sketch)
+  - Design checklist and testing guide
+
+- **App Icon Visual Mockups**: ASCII art mockups of icon concepts
+  - `.github/ICON_MOCKUPS.txt`: Visual representations of all 3 concepts
+  - Color palette reference
+  - Size comparison guide (1024px down to 60px)
+  - Quick decision guide for choosing concept
+  - Canva quick-start steps
+  - Final verification checklist
+  - Makes it easy to visualize and choose design direction
+
 - **App Store Submission Checklist**: Comprehensive guide for preparing app for App Store
   - `.github/APP_STORE_CHECKLIST.md`: Complete checklist with all requirements
   - Critical requirements (app icon, bundle ID, developer account, screenshots)
