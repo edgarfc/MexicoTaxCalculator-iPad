@@ -148,6 +148,10 @@ For official tax calculations and compliance, please consult with:
 
 The calculator makes simplifying assumptions (e.g., marital status, standard deductions) and may not account for all individual circumstances, credits, or deductions that could affect your actual tax liability.
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes, updates, and version information.
+
 ## License
 
 This is an educational project. Feel free to use and modify as needed.
