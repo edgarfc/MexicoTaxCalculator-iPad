@@ -26,9 +26,7 @@ class TaxCalculatorViewModel: ObservableObject {
     private let taxCalculator = TaxCalculator()
 
     init() {
-        // Establece valor de ejemplo predeterminado
-        salaryInput = "10000"
-        calculateTaxes()
+        // Start with empty input - user enters their own salary
     }
 
     private func calculateTaxes() {

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Salary Input Field**: Improved user experience for salary input
+  - Input field now starts blank instead of pre-filled with "10000"
+  - Users must enter their own salary amount
+  - Provides cleaner, more intuitive first-time experience
+  - Numeric keyboard (decimal pad) already configured and working correctly
+  - File modified: `MexicoTaxCalculatorAppiPad/MexicoTaxCalculatorAppiPad/ViewModels/TaxCalculatorViewModel.swift`
+  - Impact: Users see empty field on app launch, encouraging them to enter their actual salary
+
 ### Added
 - **Xcode Git Integration Guide**: Complete guide for using git directly from Xcode
   - `.github/XCODE_GIT_GUIDE.md`: Step-by-step instructions for Xcode source control
