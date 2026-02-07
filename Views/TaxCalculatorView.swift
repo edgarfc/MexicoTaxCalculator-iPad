@@ -170,8 +170,10 @@ struct TaxCalculatorView: View {
                                         color: Color(red: 0.4, green: 0.7, blue: 1.0)
                                     )
 
-                                    Divider()
-                                        .background(.white.opacity(0.3))
+                                    Rectangle()
+                                        .fill(.white.opacity(0.6))
+                                        .frame(height: 1)
+                                        .padding(.vertical, 8)
 
                                     LiquidGlassTaxDetailRow(
                                         title: "Deducciones Totales",
@@ -193,13 +195,13 @@ struct TaxCalculatorView: View {
                                 )
 
                                 // Tax Rates
-                                VStack(alignment: .leading, spacing: 12) {
+                                VStack(alignment: .leading, spacing: 8) {
                                     Text("Tasas de Impuesto")
                                         .font(.headline)
                                         .foregroundColor(.white)
 
                                     HStack {
-                                        VStack(alignment: .leading, spacing: 4) {
+                                        VStack(alignment: .leading, spacing: 2) {
                                             Text("Tasa Promedio")
                                                 .font(.subheadline)
                                                 .foregroundColor(.white.opacity(0.7))
@@ -211,7 +213,7 @@ struct TaxCalculatorView: View {
 
                                         Spacer()
 
-                                        VStack(alignment: .trailing, spacing: 4) {
+                                        VStack(alignment: .trailing, spacing: 2) {
                                             Text("Tasa Marginal")
                                                 .font(.subheadline)
                                                 .foregroundColor(.white.opacity(0.7))
@@ -236,12 +238,12 @@ struct TaxCalculatorView: View {
 
                                 // Tax Bracket Info
                                 if let bracket = result.isrBracket {
-                                    VStack(alignment: .leading, spacing: 12) {
+                                    VStack(alignment: .leading, spacing: 8) {
                                         Text("Tu Categoría de ISR")
                                             .font(.headline)
                                             .foregroundColor(.white)
 
-                                        VStack(alignment: .leading, spacing: 8) {
+                                        VStack(alignment: .leading, spacing: 4) {
                                             HStack {
                                                 Text("Rango de ingresos mensuales:")
                                                     .font(.subheadline)
@@ -261,9 +263,10 @@ struct TaxCalculatorView: View {
                                                     .foregroundColor(.white)
                                             }
 
-                                            Divider()
-                                                .background(.white.opacity(0.3))
-                                                .padding(.vertical, 4)
+                                            Rectangle()
+                                                .fill(.white.opacity(0.3))
+                                                .frame(height: 1)
+                                                .padding(.vertical, 6)
 
                                             HStack {
                                                 Text("Tasa sobre excedente:")
