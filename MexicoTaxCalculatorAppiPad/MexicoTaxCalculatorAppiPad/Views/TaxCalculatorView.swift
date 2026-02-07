@@ -44,7 +44,7 @@ struct TaxCalculatorView: View {
                                 .font(.system(size: fontSize(34), weight: .bold))
                                 .foregroundColor(.white)
 
-                            Text("ISR & IMSS Calculator 2026")
+                            Text("ISR & IMSS 2026")
                                 .font(.system(size: fontSize(15)))
                                 .foregroundColor(.white.opacity(0.8))
                         }
