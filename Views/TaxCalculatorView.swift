@@ -11,6 +11,16 @@ struct TaxCalculatorView: View {
     @StateObject private var viewModel = TaxCalculatorViewModel()
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
+    // Helper to detect iPad
+    var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
+
+    // Responsive font sizes
+    func fontSize(_ baseSize: CGFloat) -> CGFloat {
+        isIPad ? baseSize * 1.3 : baseSize
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -31,12 +41,11 @@ struct TaxCalculatorView: View {
                         // Header
                         VStack(spacing: 8) {
                             Text("Mexico Tax Calculator")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
+                                .font(.system(size: fontSize(34), weight: .bold))
                                 .foregroundColor(.white)
 
                             Text("ISR & IMSS Calculator 2026")
-                                .font(.subheadline)
+                                .font(.system(size: fontSize(15)))
                                 .foregroundColor(.white.opacity(0.8))
                         }
                         .padding(.top)
@@ -44,28 +53,30 @@ struct TaxCalculatorView: View {
                         // Input Section
                         VStack(alignment: .leading, spacing: 16) {
                             Text("Información Salarial")
-                                .font(.headline)
+                                .font(.system(size: fontSize(17), weight: .semibold))
                                 .foregroundColor(.white)
 
                             // Salary Input
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Salario Bruto")
-                                    .font(.subheadline)
+                                    .font(.system(size: fontSize(15)))
                                     .foregroundColor(.white.opacity(0.8))
 
                                 HStack {
                                     Text("$")
                                         .foregroundColor(.white.opacity(0.8))
-                                        .font(.title3)
+                                        .font(.system(size: fontSize(20)))
 
                                     ZStack(alignment: .leading) {
                                         if viewModel.salaryInput.isEmpty {
                                             Text("Ingresa cantidad")
+                                                .font(.system(size: fontSize(16)))
                                                 .foregroundColor(.white.opacity(0.5))
                                                 .padding(.leading, 16)
                                         }
                                         TextField("", text: $viewModel.salaryInput)
                                             .keyboardType(.decimalPad)
+                                            .font(.system(size: fontSize(16)))
                                             .padding()
                                             .foregroundColor(.white)
                                     }
@@ -83,7 +94,7 @@ struct TaxCalculatorView: View {
                             // Period Selector - Liquid Glass Style
                             VStack(alignment: .leading, spacing: 12) {
                                 Text("Período de Pago")
-                                    .font(.subheadline)
+                                    .font(.system(size: fontSize(15)))
                                     .foregroundColor(.white.opacity(0.8))
 
                                 // 2x2 Grid layout
@@ -163,7 +174,7 @@ struct TaxCalculatorView: View {
                                 // Detailed Breakdown
                                 VStack(alignment: .leading, spacing: 12) {
                                     Text("Desglose de Impuestos")
-                                        .font(.headline)
+                                        .font(.system(size: fontSize(17), weight: .semibold))
                                         .foregroundColor(.white)
 
                                     LiquidGlassTaxDetailRow(
@@ -205,17 +216,16 @@ struct TaxCalculatorView: View {
                                 // Tax Rates
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text("Tasas de Impuesto")
-                                        .font(.headline)
+                                        .font(.system(size: fontSize(17), weight: .semibold))
                                         .foregroundColor(.white)
 
                                     HStack {
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text("Tasa Promedio")
-                                                .font(.subheadline)
+                                                .font(.system(size: fontSize(15)))
                                                 .foregroundColor(.white.opacity(0.7))
                                             Text(result.averageTaxRatePercentage)
-                                                .font(.title2)
-                                                .fontWeight(.semibold)
+                                                .font(.system(size: fontSize(28), weight: .semibold))
                                                 .foregroundColor(.white)
                                         }
 
@@ -223,11 +233,10 @@ struct TaxCalculatorView: View {
 
                                         VStack(alignment: .trailing, spacing: 2) {
                                             Text("Tasa Marginal")
-                                                .font(.subheadline)
+                                                .font(.system(size: fontSize(15)))
                                                 .foregroundColor(.white.opacity(0.7))
                                             Text(result.marginalTaxRatePercentage)
-                                                .font(.title2)
-                                                .fontWeight(.semibold)
+                                                .font(.system(size: fontSize(28), weight: .semibold))
                                                 .foregroundColor(.white)
                                         }
                                     }
@@ -248,26 +257,24 @@ struct TaxCalculatorView: View {
                                 if let bracket = result.isrBracket {
                                     VStack(alignment: .leading, spacing: 8) {
                                         Text("Tu Categoría de ISR")
-                                            .font(.headline)
+                                            .font(.system(size: fontSize(17), weight: .semibold))
                                             .foregroundColor(.white)
 
                                         VStack(alignment: .leading, spacing: 4) {
                                             HStack {
                                                 Text("Rango de ingresos mensuales:")
-                                                    .font(.subheadline)
+                                                    .font(.system(size: fontSize(15)))
                                                     .foregroundColor(.white.opacity(0.7))
                                                 Spacer()
                                             }
 
                                             if let upper = bracket.upperLimit {
                                                 Text("$\(formatCurrency(bracket.lowerLimit)) - $\(formatCurrency(upper))")
-                                                    .font(.title3)
-                                                    .fontWeight(.semibold)
+                                                    .font(.system(size: fontSize(20), weight: .semibold))
                                                     .foregroundColor(.white)
                                             } else {
                                                 Text("$\(formatCurrency(bracket.lowerLimit)) en adelante")
-                                                    .font(.title3)
-                                                    .fontWeight(.semibold)
+                                                    .font(.system(size: fontSize(20), weight: .semibold))
                                                     .foregroundColor(.white)
                                             }
 
@@ -278,12 +285,11 @@ struct TaxCalculatorView: View {
 
                                             HStack {
                                                 Text("Tasa sobre excedente:")
-                                                    .font(.subheadline)
+                                                    .font(.system(size: fontSize(15)))
                                                     .foregroundColor(.white.opacity(0.7))
                                                 Spacer()
                                                 Text("\(formatPercentage(bracket.percentageOnExcess))%")
-                                                    .font(.title3)
-                                                    .fontWeight(.semibold)
+                                                    .font(.system(size: fontSize(20), weight: .semibold))
                                                     .foregroundColor(.white)
                                             }
                                         }
@@ -303,7 +309,7 @@ struct TaxCalculatorView: View {
 
                                 // Disclaimer
                                 Text("Esta calculadora proporciona una estimación basada en las tablas de ISR 2026 y tasas del IMSS. Para cálculos oficiales, consulte con un profesional fiscal o el SAT (Servicio de Administración Tributaria).")
-                                    .font(.caption)
+                                    .font(.system(size: fontSize(12)))
                                     .foregroundColor(.white.opacity(0.7))
                                     .padding(20)
                                     .background(
@@ -349,17 +355,22 @@ struct PeriodButton: View {
     let period: TaxCalculationResult.SalaryPeriod
     let isSelected: Bool
     let action: () -> Void
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
 
     var body: some View {
         Button(action: action) {
             Text(period.displayName)
-                .font(.subheadline)
+                .font(.system(size: isIPad ? 19.5 : 15))
                 .fontWeight(isSelected ? .semibold : .regular)
                 .foregroundColor(.white)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
-                .padding(.vertical, 12)
-                .padding(.horizontal, 8)
+                .padding(.vertical, isIPad ? 16 : 12)
+                .padding(.horizontal, isIPad ? 12 : 8)
                 .frame(maxWidth: .infinity)
                 .background(
                     ZStack {
@@ -390,16 +401,20 @@ struct LiquidGlassSummaryCard: View {
     let title: String
     let amount: Decimal
     let color: Color
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.subheadline)
+                .font(.system(size: isIPad ? 19.5 : 15))
                 .foregroundColor(.white.opacity(0.8))
 
             Text("$\(formatCurrency(amount))")
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(.system(size: isIPad ? 28 : 22, weight: .bold))
                 .foregroundColor(color)
                 .shadow(color: color.opacity(0.5), radius: 8, x: 0, y: 0)
         }
@@ -445,24 +460,29 @@ struct LiquidGlassTaxDetailRow: View {
     let amount: Decimal
     let color: Color
     var isBold: Bool = false
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
 
     var body: some View {
         HStack {
             HStack(spacing: 8) {
                 Circle()
                     .fill(color)
-                    .frame(width: 10, height: 10)
+                    .frame(width: isIPad ? 13 : 10, height: isIPad ? 13 : 10)
                     .shadow(color: color.opacity(0.6), radius: 4, x: 0, y: 0)
 
                 Text(title)
-                    .font(isBold ? .body.bold() : .body)
+                    .font(.system(size: isIPad ? 22 : 17, weight: isBold ? .bold : .regular))
                     .foregroundColor(.white)
             }
 
             Spacer()
 
             Text("$\(formatCurrency(amount))")
-                .font(isBold ? .body.bold() : .body)
+                .font(.system(size: isIPad ? 22 : 17, weight: isBold ? .bold : .regular))
                 .foregroundColor(color)
         }
     }
