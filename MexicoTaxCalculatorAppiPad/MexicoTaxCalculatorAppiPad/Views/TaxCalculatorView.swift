@@ -40,7 +40,7 @@ struct TaxCalculatorView: View {
                     VStack(spacing: 24) {
                         // Header
                         VStack(spacing: 8) {
-                            Text("Mexico Tax Calculator")
+                            Text("Calculadora de Impuestos")
                                 .font(.system(size: fontSize(34), weight: .bold))
                                 .foregroundColor(.white)
 
