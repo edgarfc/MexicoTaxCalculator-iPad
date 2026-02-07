@@ -2,7 +2,7 @@
 //  TaxCalculatorView.swift
 //  MexicoTaxCalculator
 //
-//  Interfaz principal de la calculadora
+//  Main calculator interface
 //
 
 import SwiftUI
@@ -11,293 +11,289 @@ struct TaxCalculatorView: View {
     @StateObject private var viewModel = TaxCalculatorViewModel()
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    var isIPad: Bool {
-        horizontalSizeClass == .regular
-    }
-
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
+            ZStack {
+                // Gradient background
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.1, green: 0.2, blue: 0.45),
+                        Color(red: 0.2, green: 0.3, blue: 0.6),
+                        Color(red: 0.3, green: 0.4, blue: 0.7)
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
                 ScrollView {
-                    if isIPad {
-                        // iPad Layout: Two columns
-                        let horizontalPadding: CGFloat = 32
-                        let columnSpacing: CGFloat = 24
-                        let availableWidth = geometry.size.width - (horizontalPadding * 2) - columnSpacing
-                        let leftColumnWidth = availableWidth * 0.38
-                        let rightColumnWidth = availableWidth * 0.62
+                    VStack(spacing: 24) {
+                        // Header
+                        VStack(spacing: 8) {
+                            Text("Mexico Tax Calculator")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
 
-                        HStack(alignment: .top, spacing: columnSpacing) {
-                            // Left column: Input section
-                            VStack(spacing: 24) {
-                                headerView
-                                inputSection
+                            Text("ISR & IMSS Calculator 2026")
+                                .font(.subheadline)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                        .padding(.top)
+
+                        // Input Section
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("Información Salarial")
+                                .font(.headline)
+                                .foregroundColor(.white)
+
+                            // Salary Input
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Salario Bruto")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white.opacity(0.8))
+
+                                HStack {
+                                    Text("$")
+                                        .foregroundColor(.white.opacity(0.8))
+                                        .font(.title3)
+                                    TextField("Ingresa cantidad", text: $viewModel.salaryInput)
+                                        .keyboardType(.decimalPad)
+                                        .padding()
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .fill(.white.opacity(0.15))
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 12)
+                                                        .stroke(.white.opacity(0.3), lineWidth: 1)
+                                                )
+                                        )
+                                        .foregroundColor(.white)
+                                }
                             }
-                            .frame(width: leftColumnWidth)
 
-                            // Right column: Results
-                            if viewModel.calculationResult != nil {
-                                resultsSection
-                                    .frame(width: rightColumnWidth)
-                            } else {
-                                placeholderView
-                                    .frame(width: rightColumnWidth)
+                            // Period Selector - Liquid Glass Style
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Período de Pago")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white.opacity(0.8))
+
+                                HStack(spacing: 8) {
+                                    ForEach(TaxCalculationResult.SalaryPeriod.allCases, id: \.self) { period in
+                                        Button(action: {
+                                            withAnimation(.spring(response: 0.3)) {
+                                                viewModel.selectedPeriod = period
+                                            }
+                                        }) {
+                                            Text(period.displayName)
+                                                .font(.subheadline)
+                                                .fontWeight(viewModel.selectedPeriod == period ? .semibold : .regular)
+                                                .foregroundColor(.white)
+                                                .padding(.vertical, 12)
+                                                .padding(.horizontal, 16)
+                                                .frame(maxWidth: .infinity)
+                                                .background(
+                                                    ZStack {
+                                                        if viewModel.selectedPeriod == period {
+                                                            RoundedRectangle(cornerRadius: 12)
+                                                                .fill(.white.opacity(0.25))
+                                                                .overlay(
+                                                                    RoundedRectangle(cornerRadius: 12)
+                                                                        .stroke(.white.opacity(0.4), lineWidth: 1.5)
+                                                                )
+                                                                .shadow(color: .white.opacity(0.3), radius: 8, x: 0, y: 4)
+                                                        } else {
+                                                            RoundedRectangle(cornerRadius: 12)
+                                                                .fill(.white.opacity(0.1))
+                                                                .overlay(
+                                                                    RoundedRectangle(cornerRadius: 12)
+                                                                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                                                                )
+                                                        }
+                                                    }
+                                                )
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
                             }
                         }
-                        .padding(.horizontal, horizontalPadding)
-                        .padding(.vertical, 24)
-                    } else {
-                        // iPhone Layout: Single column
-                        VStack(spacing: 24) {
-                            headerView
-                            inputSection
+                        .padding(20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.ultraThinMaterial)
+                                .opacity(0.8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(.white.opacity(0.2), lineWidth: 1.5)
+                                )
+                                .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
+                        )
 
-                            if viewModel.calculationResult != nil {
-                                resultsSection
+                        // Results Section
+                        if let result = viewModel.calculationResult {
+                            VStack(spacing: 16) {
+                                // Summary Cards
+                                HStack(spacing: 12) {
+                                    LiquidGlassSummaryCard(
+                                        title: "Salario Neto",
+                                        amount: result.netSalary,
+                                        color: Color(red: 0.3, green: 0.9, blue: 0.6)
+                                    )
+
+                                    LiquidGlassSummaryCard(
+                                        title: "Impuestos Totales",
+                                        amount: result.totalDeductions,
+                                        color: Color(red: 1.0, green: 0.4, blue: 0.4)
+                                    )
+                                }
+
+                                // Detailed Breakdown
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Desglose de Impuestos")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+
+                                    LiquidGlassTaxDetailRow(
+                                        title: "ISR (Impuesto sobre la Renta)",
+                                        amount: result.isrAmount,
+                                        color: Color(red: 1.0, green: 0.7, blue: 0.3)
+                                    )
+
+                                    LiquidGlassTaxDetailRow(
+                                        title: "IMSS (Seguro Social)",
+                                        amount: result.imssAmount,
+                                        color: Color(red: 0.4, green: 0.7, blue: 1.0)
+                                    )
+
+                                    Divider()
+                                        .background(.white.opacity(0.3))
+
+                                    LiquidGlassTaxDetailRow(
+                                        title: "Deducciones Totales",
+                                        amount: result.totalDeductions,
+                                        color: Color(red: 1.0, green: 0.4, blue: 0.4),
+                                        isBold: true
+                                    )
+                                }
+                                .padding(20)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.ultraThinMaterial)
+                                        .opacity(0.8)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(.white.opacity(0.2), lineWidth: 1.5)
+                                        )
+                                        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
+                                )
+
+                                // Tax Rates
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Tasas de Impuesto")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+
+                                    HStack {
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("Tasa Promedio")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white.opacity(0.7))
+                                            Text(result.averageTaxRatePercentage)
+                                                .font(.title2)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(.white)
+                                        }
+
+                                        Spacer()
+
+                                        VStack(alignment: .trailing, spacing: 4) {
+                                            Text("Tasa Marginal")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white.opacity(0.7))
+                                            Text(result.marginalTaxRatePercentage)
+                                                .font(.title2)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(.white)
+                                        }
+                                    }
+                                }
+                                .padding(20)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.ultraThinMaterial)
+                                        .opacity(0.8)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(.white.opacity(0.2), lineWidth: 1.5)
+                                        )
+                                        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
+                                )
+
+                                // Tax Bracket Info
+                                if let bracket = result.isrBracket {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text("Tu Categoría de ISR")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("Rango de ingresos mensuales:")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white.opacity(0.7))
+
+                                            if let upper = bracket.upperLimit {
+                                                Text("$\(formatCurrency(bracket.lowerLimit)) - $\(formatCurrency(upper))")
+                                                    .font(.body)
+                                                    .foregroundColor(.white)
+                                            } else {
+                                                Text("$\(formatCurrency(bracket.lowerLimit)) en adelante")
+                                                    .font(.body)
+                                                    .foregroundColor(.white)
+                                            }
+
+                                            Text("Tasa sobre excedente: \(formatPercentage(bracket.percentageOnExcess))%")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white.opacity(0.7))
+                                                .padding(.top, 4)
+                                        }
+                                    }
+                                    .padding(20)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(.ultraThinMaterial)
+                                            .opacity(0.8)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .stroke(.white.opacity(0.2), lineWidth: 1.5)
+                                            )
+                                            .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
+                                    )
+                                }
+
+                                // Disclaimer
+                                Text("Esta calculadora proporciona una estimación basada en las tablas de ISR 2026 y tasas del IMSS. Para cálculos oficiales, consulte con un profesional fiscal o el SAT (Servicio de Administración Tributaria).")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.7))
+                                    .padding(20)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(.white.opacity(0.1))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .stroke(.white.opacity(0.15), lineWidth: 1)
+                                            )
+                                    )
                             }
                         }
-                        .padding()
                     }
+                    .padding(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(.stack)
-    }
-
-    // MARK: - Header
-    private var headerView: some View {
-        VStack(spacing: 8) {
-            Text("Calculadora de Impuestos")
-                .font(isIPad ? .system(size: 36, weight: .bold) : .largeTitle)
-                .fontWeight(.bold)
-
-            Text("Calculadora ISR e IMSS 2026")
-                .font(isIPad ? .title3 : .subheadline)
-                .foregroundColor(.secondary)
-        }
-        .frame(maxWidth: .infinity, alignment: isIPad ? .leading : .center)
-        .padding(.top, isIPad ? 8 : 0)
-    }
-
-    // MARK: - Input Section
-    private var inputSection: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Información Salarial")
-                .font(isIPad ? .title2 : .headline)
-                .fontWeight(.semibold)
-
-            // Entrada de salario
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Salario Bruto")
-                    .font(isIPad ? .body : .subheadline)
-                    .foregroundColor(.secondary)
-
-                HStack(spacing: 8) {
-                    Text("$")
-                        .font(isIPad ? .title3 : .body)
-                        .foregroundColor(.secondary)
-                        .frame(width: 20)
-
-                    TextField("Ingresa la cantidad", text: $viewModel.salaryInput)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .font(isIPad ? .title3 : .body)
-                }
-            }
-
-            // Selector de período
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Período de Pago")
-                    .font(isIPad ? .body : .subheadline)
-                    .foregroundColor(.secondary)
-
-                Picker("Período", selection: $viewModel.selectedPeriod) {
-                    ForEach(TaxCalculationResult.SalaryPeriod.allCases, id: \.self) { period in
-                        Text(period.displayName).tag(period)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .font(isIPad ? .body : .subheadline)
-            }
-        }
-        .padding(isIPad ? 24 : 16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.systemGray6))
-        .cornerRadius(16)
-    }
-
-    // MARK: - Placeholder View
-    private var placeholderView: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "calculator.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.secondary.opacity(0.5))
-
-            Text("Ingresa un salario para calcular")
-                .font(.title3)
-                .foregroundColor(.secondary)
-
-            Text("Los resultados aparecerán aquí")
-                .font(.subheadline)
-                .foregroundColor(.secondary.opacity(0.7))
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(40)
-    }
-
-    // MARK: - Results Section
-    private var resultsSection: some View {
-        Group {
-            if let result = viewModel.calculationResult {
-                VStack(spacing: isIPad ? 20 : 16) {
-                    // Tarjetas resumen
-                    if isIPad {
-                        VStack(spacing: 16) {
-                            SummaryCard(
-                                title: "Salario Neto",
-                                amount: result.netSalary,
-                                color: .green,
-                                isIPad: isIPad
-                            )
-
-                            SummaryCard(
-                                title: "Total de Impuestos",
-                                amount: result.totalDeductions,
-                                color: .red,
-                                isIPad: isIPad
-                            )
-                        }
-                    } else {
-                        HStack(spacing: 12) {
-                            SummaryCard(
-                                title: "Salario Neto",
-                                amount: result.netSalary,
-                                color: .green,
-                                isIPad: isIPad
-                            )
-
-                            SummaryCard(
-                                title: "Total de Impuestos",
-                                amount: result.totalDeductions,
-                                color: .red,
-                                isIPad: isIPad
-                            )
-                        }
-                    }
-
-                    // Desglose detallado
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text("Desglose de Impuestos")
-                            .font(isIPad ? .title2 : .headline)
-                            .fontWeight(.semibold)
-
-                        TaxDetailRow(
-                            title: "ISR (Impuesto Sobre la Renta)",
-                            amount: result.isrAmount,
-                            color: .orange,
-                            isIPad: isIPad
-                        )
-
-                        TaxDetailRow(
-                            title: "IMSS (Seguro Social)",
-                            amount: result.imssAmount,
-                            color: .blue,
-                            isIPad: isIPad
-                        )
-
-                        Divider()
-                            .padding(.vertical, 4)
-
-                        TaxDetailRow(
-                            title: "Total de Deducciones",
-                            amount: result.totalDeductions,
-                            color: .red,
-                            isBold: true,
-                            isIPad: isIPad
-                        )
-                    }
-                    .padding(isIPad ? 24 : 16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(16)
-
-                    // Tasas de impuestos
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text("Tasas de Impuestos")
-                            .font(isIPad ? .title2 : .headline)
-                            .fontWeight(.semibold)
-
-                        HStack(spacing: isIPad ? 32 : 16) {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Tasa Promedio")
-                                    .font(isIPad ? .body : .subheadline)
-                                    .foregroundColor(.secondary)
-                                Text(result.averageTaxRatePercentage)
-                                    .font(isIPad ? .system(size: 32, weight: .semibold) : .title2)
-                                    .fontWeight(.semibold)
-                            }
-
-                            Spacer()
-
-                            VStack(alignment: .trailing, spacing: 6) {
-                                Text("Tasa Marginal")
-                                    .font(isIPad ? .body : .subheadline)
-                                    .foregroundColor(.secondary)
-                                Text(result.marginalTaxRatePercentage)
-                                    .font(isIPad ? .system(size: 32, weight: .semibold) : .title2)
-                                    .fontWeight(.semibold)
-                            }
-                        }
-                    }
-                    .padding(isIPad ? 24 : 16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(16)
-
-                    // Información del rango de ISR
-                    if let bracket = result.isrBracket {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Tu Rango de ISR")
-                                .font(isIPad ? .title2 : .headline)
-                                .fontWeight(.semibold)
-
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Rango de ingreso mensual:")
-                                    .font(isIPad ? .body : .subheadline)
-                                    .foregroundColor(.secondary)
-
-                                if let upper = bracket.upperLimit {
-                                    Text("$\(formatCurrency(bracket.lowerLimit)) - $\(formatCurrency(upper))")
-                                        .font(isIPad ? .title3 : .body)
-                                        .fontWeight(.medium)
-                                } else {
-                                    Text("$\(formatCurrency(bracket.lowerLimit)) en adelante")
-                                        .font(isIPad ? .title3 : .body)
-                                        .fontWeight(.medium)
-                                }
-
-                                Text("Tasa sobre excedente: \(formatPercentage(bracket.percentageOnExcess))%")
-                                    .font(isIPad ? .body : .subheadline)
-                                    .foregroundColor(.secondary)
-                                    .padding(.top, 6)
-                            }
-                        }
-                        .padding(isIPad ? 24 : 16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(16)
-                    }
-
-                    // Aviso legal
-                    Text("Esta calculadora proporciona una estimación basada en las tablas de ISR 2026 y tasas de IMSS. Para cálculos fiscales oficiales, consulte con un profesional fiscal o el SAT (Servicio de Administración Tributaria).")
-                        .font(isIPad ? .footnote : .caption)
-                        .foregroundColor(.secondary)
-                        .padding(isIPad ? 16 : 12)
-                        .multilineTextAlignment(.leading)
-                }
-            }
-        }
     }
 
     private func formatCurrency(_ value: Decimal) -> String {
@@ -317,48 +313,51 @@ struct TaxCalculatorView: View {
     }
 }
 
-// MARK: - Vistas de soporte
+// MARK: - Supporting Views - Liquid Glass Components
 
-struct SummaryCard: View {
+struct LiquidGlassSummaryCard: View {
     let title: String
     let amount: Decimal
     let color: Color
-    var isIPad: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: isIPad ? 12 : 8) {
-            HStack {
-                Image(systemName: iconName)
-                    .font(isIPad ? .title2 : .title3)
-                    .foregroundColor(color)
-
-                Text(title)
-                    .font(isIPad ? .title3 : .subheadline)
-                    .foregroundColor(.secondary)
-            }
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.8))
 
             Text("$\(formatCurrency(amount))")
-                .font(isIPad ? .system(size: 36, weight: .bold) : .title2)
+                .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(color)
-                .minimumScaleFactor(0.8)
+                .shadow(color: color.opacity(0.5), radius: 8, x: 0, y: 0)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(isIPad ? 24 : 16)
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
-    }
+        .padding(20)
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.ultraThinMaterial)
+                    .opacity(0.8)
 
-    private var iconName: String {
-        switch title {
-        case "Salario Neto":
-            return "dollarsign.circle.fill"
-        case "Total de Impuestos":
-            return "chart.pie.fill"
-        default:
-            return "dollarsign.circle"
-        }
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(.white.opacity(0.3), lineWidth: 1.5)
+
+                // Inner glow effect
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                color.opacity(0.2),
+                                Color.clear
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            }
+        )
+        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
     }
 
     private func formatCurrency(_ value: Decimal) -> String {
@@ -370,31 +369,31 @@ struct SummaryCard: View {
     }
 }
 
-struct TaxDetailRow: View {
+struct LiquidGlassTaxDetailRow: View {
     let title: String
     let amount: Decimal
     let color: Color
     var isBold: Bool = false
-    var isIPad: Bool = false
 
     var body: some View {
-        HStack(alignment: .center) {
-            HStack(spacing: isIPad ? 12 : 8) {
+        HStack {
+            HStack(spacing: 8) {
                 Circle()
                     .fill(color)
-                    .frame(width: isIPad ? 10 : 8, height: isIPad ? 10 : 8)
+                    .frame(width: 10, height: 10)
+                    .shadow(color: color.opacity(0.6), radius: 4, x: 0, y: 0)
 
                 Text(title)
-                    .font(isBold ? (isIPad ? .title3.bold() : .body.bold()) : (isIPad ? .title3 : .body))
+                    .font(isBold ? .body.bold() : .body)
+                    .foregroundColor(.white)
             }
 
             Spacer()
 
             Text("$\(formatCurrency(amount))")
-                .font(isBold ? (isIPad ? .title3.bold() : .body.bold()) : (isIPad ? .title3 : .body))
+                .font(isBold ? .body.bold() : .body)
                 .foregroundColor(color)
         }
-        .padding(.vertical, isIPad ? 4 : 2)
     }
 
     private func formatCurrency(_ value: Decimal) -> String {
