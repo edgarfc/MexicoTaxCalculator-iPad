@@ -78,42 +78,46 @@ struct TaxCalculatorView: View {
                                     .font(.subheadline)
                                     .foregroundColor(.white.opacity(0.8))
 
-                                HStack(spacing: 8) {
-                                    ForEach(TaxCalculationResult.SalaryPeriod.allCases, id: \.self) { period in
-                                        Button(action: {
+                                // 2x2 Grid layout
+                                VStack(spacing: 8) {
+                                    HStack(spacing: 8) {
+                                        PeriodButton(
+                                            period: .monthly,
+                                            isSelected: viewModel.selectedPeriod == .monthly
+                                        ) {
                                             withAnimation(.spring(response: 0.3)) {
-                                                viewModel.selectedPeriod = period
+                                                viewModel.selectedPeriod = .monthly
                                             }
-                                        }) {
-                                            Text(period.displayName)
-                                                .font(.subheadline)
-                                                .fontWeight(viewModel.selectedPeriod == period ? .semibold : .regular)
-                                                .foregroundColor(.white)
-                                                .padding(.vertical, 12)
-                                                .padding(.horizontal, 16)
-                                                .frame(maxWidth: .infinity)
-                                                .background(
-                                                    ZStack {
-                                                        if viewModel.selectedPeriod == period {
-                                                            RoundedRectangle(cornerRadius: 12)
-                                                                .fill(.white.opacity(0.25))
-                                                                .overlay(
-                                                                    RoundedRectangle(cornerRadius: 12)
-                                                                        .stroke(.white.opacity(0.4), lineWidth: 1.5)
-                                                                )
-                                                                .shadow(color: .white.opacity(0.3), radius: 8, x: 0, y: 4)
-                                                        } else {
-                                                            RoundedRectangle(cornerRadius: 12)
-                                                                .fill(.white.opacity(0.1))
-                                                                .overlay(
-                                                                    RoundedRectangle(cornerRadius: 12)
-                                                                        .stroke(.white.opacity(0.2), lineWidth: 1)
-                                                                )
-                                                        }
-                                                    }
-                                                )
                                         }
-                                        .buttonStyle(PlainButtonStyle())
+
+                                        PeriodButton(
+                                            period: .biweekly,
+                                            isSelected: viewModel.selectedPeriod == .biweekly
+                                        ) {
+                                            withAnimation(.spring(response: 0.3)) {
+                                                viewModel.selectedPeriod = .biweekly
+                                            }
+                                        }
+                                    }
+
+                                    HStack(spacing: 8) {
+                                        PeriodButton(
+                                            period: .weekly,
+                                            isSelected: viewModel.selectedPeriod == .weekly
+                                        ) {
+                                            withAnimation(.spring(response: 0.3)) {
+                                                viewModel.selectedPeriod = .weekly
+                                            }
+                                        }
+
+                                        PeriodButton(
+                                            period: .annual,
+                                            isSelected: viewModel.selectedPeriod == .annual
+                                        ) {
+                                            withAnimation(.spring(response: 0.3)) {
+                                                viewModel.selectedPeriod = .annual
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -314,6 +318,47 @@ struct TaxCalculatorView: View {
 }
 
 // MARK: - Supporting Views - Liquid Glass Components
+
+struct PeriodButton: View {
+    let period: TaxCalculationResult.SalaryPeriod
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(period.displayName)
+                .font(.subheadline)
+                .fontWeight(isSelected ? .semibold : .regular)
+                .foregroundColor(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .padding(.vertical, 12)
+                .padding(.horizontal, 8)
+                .frame(maxWidth: .infinity)
+                .background(
+                    ZStack {
+                        if isSelected {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(.white.opacity(0.25))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(.white.opacity(0.4), lineWidth: 1.5)
+                                )
+                                .shadow(color: .white.opacity(0.3), radius: 8, x: 0, y: 4)
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(.white.opacity(0.1))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                                )
+                        }
+                    }
+                )
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
 
 struct LiquidGlassSummaryCard: View {
     let title: String
