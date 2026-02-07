@@ -236,30 +236,45 @@ struct TaxCalculatorView: View {
 
                                 // Tax Bracket Info
                                 if let bracket = result.isrBracket {
-                                    VStack(alignment: .leading, spacing: 8) {
+                                    VStack(alignment: .leading, spacing: 12) {
                                         Text("Tu Categoría de ISR")
                                             .font(.headline)
                                             .foregroundColor(.white)
 
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            Text("Rango de ingresos mensuales:")
-                                                .font(.subheadline)
-                                                .foregroundColor(.white.opacity(0.7))
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            HStack {
+                                                Text("Rango de ingresos mensuales:")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.white.opacity(0.7))
+                                                Spacer()
+                                            }
 
                                             if let upper = bracket.upperLimit {
                                                 Text("$\(formatCurrency(bracket.lowerLimit)) - $\(formatCurrency(upper))")
-                                                    .font(.body)
+                                                    .font(.title3)
+                                                    .fontWeight(.semibold)
                                                     .foregroundColor(.white)
                                             } else {
                                                 Text("$\(formatCurrency(bracket.lowerLimit)) en adelante")
-                                                    .font(.body)
+                                                    .font(.title3)
+                                                    .fontWeight(.semibold)
                                                     .foregroundColor(.white)
                                             }
 
-                                            Text("Tasa sobre excedente: \(formatPercentage(bracket.percentageOnExcess))%")
-                                                .font(.subheadline)
-                                                .foregroundColor(.white.opacity(0.7))
-                                                .padding(.top, 4)
+                                            Divider()
+                                                .background(.white.opacity(0.3))
+                                                .padding(.vertical, 4)
+
+                                            HStack {
+                                                Text("Tasa sobre excedente:")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.white.opacity(0.7))
+                                                Spacer()
+                                                Text("\(formatPercentage(bracket.percentageOnExcess))%")
+                                                    .font(.title3)
+                                                    .fontWeight(.semibold)
+                                                    .foregroundColor(.white)
+                                            }
                                         }
                                     }
                                     .padding(20)
