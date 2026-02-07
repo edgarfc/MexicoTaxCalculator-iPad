@@ -57,18 +57,26 @@ struct TaxCalculatorView: View {
                                     Text("$")
                                         .foregroundColor(.white.opacity(0.8))
                                         .font(.title3)
-                                    TextField("Ingresa cantidad", text: $viewModel.salaryInput)
-                                        .keyboardType(.decimalPad)
-                                        .padding()
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .fill(.white.opacity(0.15))
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 12)
-                                                        .stroke(.white.opacity(0.3), lineWidth: 1)
-                                                )
-                                        )
-                                        .foregroundColor(.white)
+
+                                    ZStack(alignment: .leading) {
+                                        if viewModel.salaryInput.isEmpty {
+                                            Text("Ingresa cantidad")
+                                                .foregroundColor(.white.opacity(0.5))
+                                                .padding(.leading, 16)
+                                        }
+                                        TextField("", text: $viewModel.salaryInput)
+                                            .keyboardType(.decimalPad)
+                                            .padding()
+                                            .foregroundColor(.white)
+                                    }
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(.white.opacity(0.15))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(.white.opacity(0.3), lineWidth: 1)
+                                            )
+                                    )
                                 }
                             }
 
