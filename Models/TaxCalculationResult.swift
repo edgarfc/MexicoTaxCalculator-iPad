@@ -28,10 +28,10 @@ struct TaxCalculationResult {
     let marginalTaxRate: Decimal
 
     enum SalaryPeriod: String, CaseIterable {
-        case monthly = "Monthly"
-        case biweekly = "Bi-weekly"
-        case weekly = "Weekly"
-        case annual = "Annual"
+        case monthly = "Mensual"
+        case biweekly = "Quincenal"
+        case weekly = "Semanal"
+        case annual = "Anual"
 
         var monthlyMultiplier: Decimal {
             switch self {
